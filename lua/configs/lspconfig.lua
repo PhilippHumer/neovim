@@ -22,6 +22,10 @@ end
 --}
 --require('jdtls').start_or_attach(config)
 
+lspconfig.clangd.setup {
+  filetypes = {'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto'}
+}
+
 
 lspconfig.phpactor.setup {
   root_dir = function(_)
