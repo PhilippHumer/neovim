@@ -10,7 +10,8 @@ local servers = {
   "clangd", 
   "jdtls", 
   "phpactor", 
-  "lemminx"
+  "lemminx",
+  "cmake"
 }
 local nvlsp = require "nvchad.configs.lspconfig"
 
