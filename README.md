@@ -1,3 +1,9 @@
+
+# Disclaimer
+**This repo was forke from the NvChad repo and is my personal neovim configuration**
+**The config is far from being good, but a good starting point.**
+
+# NvChad Readme:
 **This repo is supposed to used as config by NvChad users!**
 
 - The main nvchad repo (NvChad/NvChad) is used as a plugin by this repo.
