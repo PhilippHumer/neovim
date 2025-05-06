@@ -72,9 +72,12 @@ return {
     }
   },
 
-  {
-    "mfussenegger/nvim-jdtls"
-  },
+    {
+        "mfussenegger/nvim-jdtls",
+        dependencies = {
+            "mfussenegger/nvim-dap"
+        }
+    },
 
   {
     "phpactor/phpactor"
