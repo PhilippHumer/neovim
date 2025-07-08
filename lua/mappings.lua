@@ -17,13 +17,28 @@ map("n", "ö", "}");
 
 --dap
 local dap = require("dap")
-map('n', '<F5>',  function() dap.continue() end)
-map('n', '<F9>', function() dap.step_over() end)
-map('n', '<F11>', function() dap.step_into() end)
-map('n', '<F12>', function() dap.step_out() end)
+map('n', '<F5>',  function() dap.continue() end, {desc="Debug: continue"})
+map('n', '<F9>', function() dap.step_over() end, {desc="Debug: step over"})
+map('n', '<F7>', function() dap.step_into() end, {desc="Debug: step into"})
+map('n', '<F8>', function() dap.step_out() end, {desc="Debug: step out"})
 map("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>", { desc = "Add breakpoint at line"})
 map("n", "<leader>dr", "<cmd> DapContinue <CR>", { desc = "Start or continue the debugger"})
 sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
+
+map('n', "<leader>ca", function () vim.lsp.buf.code_action() end)
+
+--windsurf-codeium
+-- Remove the `use` here if you're using folke/lazy.nvim.
+-- use {
+--   'Exafunction/windsurf.vim',
+--   config = function ()
+--     -- Change '<C-g>' here to any keycode you like.
+--     vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+--     vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
+--     vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
+--     vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
+--   end
+-- }
 
 --project manager
 --map("n", "<leader>cp", "<cmd> NeovimProjectHistory <CR>", { desc = "Change Project"})

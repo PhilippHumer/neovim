@@ -13,6 +13,7 @@ local servers = {
     "lemminx",
     "cmake",
     "pyright",
+    "omnisharp"
 }
 local nvlsp = require "nvchad.configs.lspconfig"
 
@@ -32,18 +33,21 @@ lspconfig.lemminx.setup = {
 
 
 local java_bundles = {
-    vim.fn.glob("/home/philipp/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar",
-        true),
+    -- "/home/philipp/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.53.1.jar",
+    -- ""
+    vim.fn.glob("/home/philipp/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", true),
 }
-vim.list_extend(java_bundles, vim.split(vim.fn.glob("/home/philipp/vscode-java-test/server/*.jar", true), "\n"))
+-- vim.list_extend(java_bundles, vim.split(vim.fn.glob("/home/philipp/vscode-java-test/server/*.jar"), "\n"))
+vim.list_extend(java_bundles, vim.split(vim.fn.glob("/home/philipp/vscode-java-test/server/com.microsoft.java.test.plugin-0.43.1.jar"), "\n"))
 
-local ws_root_dir = vim.fs.root(0, { ".git", "settings.gradle" })
+local ws_root_dir = vim.fs.root(0, { ".git"})
 print(ws_root_dir)
 
 --local jdtls_config = {
 lspconfig.jdtls.setup {
     filetypes = { 'java', 'pom.xml' },
     on_attach = function()
+        require('jdtls').setup_dap({ hotcodereplace = 'auto' })
         require('jdtls.dap').setup_dap_main_class_configs()
     end,
 
@@ -62,7 +66,8 @@ lspconfig.jdtls.setup {
         '--add-modules=ALL-SYSTEM',
         '--add-opens', 'java.base/java.util=ALL-UNNAMED',
         '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-        -- '-javaagent:', '/home/philipp/java/lombok.jar',
+        '-javaagent:/home/philipp/java/lombok.jar',
+        -- '-Xbootclasspath/a:/home/philipp/java/lombok.jar',
         '-jar', '/home/philipp/eclipse-jdtls/plugins/org.eclipse.equinox.launcher_1.6.1000.v20250131-0606.jar',
         '-configuration', '/home/philipp/eclipse-jdtls/config_linux',
         '-data', ws_root_dir
@@ -94,9 +99,63 @@ lspconfig.jdtls.setup {
 --require('jdtls').start_or_attach(jdtls_config)
 --lspconfig.jdtls.setup{}
 
+
+
+
+
+
+
+
+-- local jdtls = require('jdtls')
+
+-- local java_bundles = {
+--   vim.fn.glob("/home/philipp/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", true),
+-- }
+-- vim.list_extend(java_bundles, vim.split(vim.fn.glob("/home/philipp/vscode-java-test/server/*.jar"), "\n"))
+
+-- local ws_root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew" })
+
+-- jdtls.start_or_attach({
+--   cmd = {
+--     'java',
+--     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+--     '-Dosgi.bundles.defaultStartLevel=4',
+--     '-Declipse.product=org.eclipse.jdt.ls.core.product',
+--     '-Dlog.protocol=true',
+--     '-Dlog.level=ALL',
+--     '-Xmx1g',
+--     '--add-modules=ALL-SYSTEM',
+--     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+--     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+--     '-javaagent:/home/philipp/java/lombok.jar',
+--     '-jar', '/home/philipp/eclipse-jdtls/plugins/org.eclipse.equinox.launcher_1.6.1000.v20250131-0606.jar',
+--     '-configuration', '/home/philipp/eclipse-jdtls/config_linux',
+--     '-data', ws_root_dir,
+--   },
+--   root_dir = ws_root_dir,
+--   init_options = {
+--     bundles = java_bundles
+--   },
+--   on_attach = function()
+--     jdtls.setup_dap({ hotcodereplace = 'auto' })
+--     require('jdtls.dap').setup_dap_main_class_configs()
+--   end,
+-- })
+
+
+
+
+
+
+
+
+
+
+
+
+
 lspconfig.clangd.setup {
     filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' }
-    
 }
 
 
